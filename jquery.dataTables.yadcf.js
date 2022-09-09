@@ -841,7 +841,9 @@ if (!Object.entries) {
 						ret_val = selected_value;
 					} else if (filter_match_mode === "exact") {
 						ret_val = "^" + selected_value + "$";
-					} else if (filter_match_mode === "startsWith") {
+					} else if (filter_match_mode === "ignoreCase") {
+						ret_val = "(?i)^" + selected_value + "$";
+					}else if (filter_match_mode === "startsWith") {
 						ret_val = "^" + selected_value;
 					} else if (filter_match_mode === "regex") {
 						ret_val = selected_value;
@@ -860,6 +862,8 @@ if (!Object.entries) {
 					ret_val = selected_value.join("|");
 				} else if (filter_match_mode === "exact") {
 					ret_val = "^(" + selected_value.join("|") + ")$";
+				} else if (filter_match_mode === "ignoreCase") {
+					ret_val = "(?i)^(" + selected_value.join("|") + ")$";
 				} else if (filter_match_mode === "startsWith") {
 					ret_val = "^(" + selected_value.join("|") + ")";
 				} else if (filter_match_mode === "regex") {
@@ -877,6 +881,9 @@ if (!Object.entries) {
 				} else if (filter_match_mode === "exact") {
 					selected_value = escapeRegExp(selected_value);
 					oTable.fnFilter("^" + selected_value + "$", column_number, true, false, true, case_insensitive);
+				} else if (filter_match_mode === "ignoreCase") {
+					selected_value = escapeRegExp(selected_value);
+					oTable.fnFilter("(?i)^" + selected_value + "$", column_number, true, false, true, case_insensitive);
 				} else if (filter_match_mode === "startsWith") {
 					selected_value = escapeRegExp(selected_value);
 					oTable.fnFilter("^" + selected_value, column_number, true, false, true, case_insensitive);
