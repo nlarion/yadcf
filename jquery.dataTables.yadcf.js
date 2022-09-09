@@ -2,7 +2,7 @@
 * Yet Another DataTables Column Filter - (yadcf)
 *
 * File:        jquery.dataTables.yadcf.js
-* Version:     0.9.3.1
+* Version:     0.9.3.2
 *
 * Author:      Daniel Reznick
 * Info:        https://github.com/vedmack/yadcf
@@ -907,6 +907,9 @@ if (!Object.entries) {
 			} else if (filter_match_mode === "exact") {
 				retVal = tmpStr.substring(1, tmpStr.length - 1);
 				retVal = retVal.replace(/([\\])/g, '');
+			} else if (filter_match_mode === "ignoreCase") {
+				retVal = tmpStr.substring(5, tmpStr.length - 1);
+				retVal = retVal.replace(/([\\])/g, '');
 			} else if (filter_match_mode === "startsWith") {
 				retVal = tmpStr.substring(1, tmpStr.length);
 				retVal = retVal.replace(/([\\])/g, '');
@@ -1045,6 +1048,8 @@ if (!Object.entries) {
 							oTable.fnFilter(stringForSearch, column_number_filter, true, false, true);
 						} else if (filter_match_mode === "exact") {
 							oTable.fnFilter("^(" + stringForSearch + ")$", column_number_filter, true, false, true);
+						} else if (filter_match_mode === "ignoreCase") {
+							oTable.fnFilter("(?i)^(" + stringForSearch + ")$", column_number_filter, true, false, true);
 						} else if (filter_match_mode === "startsWith") {
 							oTable.fnFilter("^(" + stringForSearch + ")", column_number_filter, true, false, true);
 						}
@@ -1068,6 +1073,9 @@ if (!Object.entries) {
 			if (filter_match_mode === "contains") {
 				retVal = tmpStr;
 			} else if (filter_match_mode === "exact") {
+				retVal = tmpStr.substring(1, tmpStr.length - 1);
+				retVal = retVal.substring(1, retVal.length - 1);
+			} else if (filter_match_mode === "ignoreCase") {
 				retVal = tmpStr.substring(1, tmpStr.length - 1);
 				retVal = retVal.substring(1, retVal.length - 1);
 			} else if (filter_match_mode === "startsWith") {
